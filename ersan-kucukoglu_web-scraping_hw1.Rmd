@@ -24,14 +24,15 @@ get_movies <- function(imdb_link) {
   t <- read_html('https://www.imdb.com/search/title/?title_type=feature&num_votes=1000,&genres=sci-fi&sort=user_rating,desc&ref_=adv_prv')
   write_html(t, 't.html')
   name <- t %>% html_nodes(".lister-item-header a") %>% html_text() 
-  rel_links<-  t %>% html_nodes(".lister-item-header a") %>% html_attr("href") 
+  rel_links<-  t %>% html_nodes(".lister-item-header a") %>% html_attr("href")
+  movie_links <- paste0("https://www.imdb.com",rel_links)
   year <- t %>% html_nodes(".text-muted.unbold") %>% html_text()
   rating <- t %>% html_nodes(".ratings-imdb-rating strong") %>% html_text()
   director<- t %>%  html_nodes(".text-muted+ p a:nth-child(1)") %>%  html_text()
   runtime<-  t %>%  html_nodes(".runtime") %>%  html_text()
   votes<-  t %>%  html_nodes(".sort-num_votes-visible span:nth-child(2)") %>%  html_text()
   df <- data.frame('Movie Name' = name, 'Release Year' = year,'Movie Rating' = rating,
-                   'Director' = director,'Run time' = runtime,'Votes' = votes,'Links' = rel_links)
+                   'Director' = director,'Run time' = runtime,'Votes' = votes,'Movie Links' = movie_links)
 }
 ```
 

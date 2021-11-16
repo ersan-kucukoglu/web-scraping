@@ -144,15 +144,16 @@ a.sourceLine {
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  t <span class="ot">&lt;-</span> <span class="fu">read_html</span>(<span class="st">&#39;https://www.imdb.com/search/title/?title_type=feature&amp;num_votes=1000,&amp;genres=sci-fi&amp;sort=user_rating,desc&amp;ref_=adv_prv&#39;</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write_html</span>(t, <span class="st">&#39;t.html&#39;</span>)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  name <span class="ot">&lt;-</span> t <span class="sc">%&gt;%</span> <span class="fu">html_nodes</span>(<span class="st">&quot;.lister-item-header a&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">html_text</span>() </span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  rel_links<span class="ot">&lt;-</span>  t <span class="sc">%&gt;%</span> <span class="fu">html_nodes</span>(<span class="st">&quot;.lister-item-header a&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">html_attr</span>(<span class="st">&quot;href&quot;</span>) </span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  year <span class="ot">&lt;-</span> t <span class="sc">%&gt;%</span> <span class="fu">html_nodes</span>(<span class="st">&quot;.text-muted.unbold&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">html_text</span>()</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  rating <span class="ot">&lt;-</span> t <span class="sc">%&gt;%</span> <span class="fu">html_nodes</span>(<span class="st">&quot;.ratings-imdb-rating strong&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">html_text</span>()</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  director<span class="ot">&lt;-</span> t <span class="sc">%&gt;%</span>  <span class="fu">html_nodes</span>(<span class="st">&quot;.text-muted+ p a:nth-child(1)&quot;</span>) <span class="sc">%&gt;%</span>  <span class="fu">html_text</span>()</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  runtime<span class="ot">&lt;-</span>  t <span class="sc">%&gt;%</span>  <span class="fu">html_nodes</span>(<span class="st">&quot;.runtime&quot;</span>) <span class="sc">%&gt;%</span>  <span class="fu">html_text</span>()</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  votes<span class="ot">&lt;-</span>  t <span class="sc">%&gt;%</span>  <span class="fu">html_nodes</span>(<span class="st">&quot;.sort-num_votes-visible span:nth-child(2)&quot;</span>) <span class="sc">%&gt;%</span>  <span class="fu">html_text</span>()</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="st">&#39;Movie Name&#39;</span> <span class="ot">=</span> name, <span class="st">&#39;Release Year&#39;</span> <span class="ot">=</span> year,<span class="st">&#39;Movie Rating&#39;</span> <span class="ot">=</span> rating,</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&#39;Director&#39;</span> <span class="ot">=</span> director,<span class="st">&#39;Run time&#39;</span> <span class="ot">=</span> runtime,<span class="st">&#39;Votes&#39;</span> <span class="ot">=</span> votes,<span class="st">&#39;Links&#39;</span> <span class="ot">=</span> rel_links)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  rel_links<span class="ot">&lt;-</span>  t <span class="sc">%&gt;%</span> <span class="fu">html_nodes</span>(<span class="st">&quot;.lister-item-header a&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">html_attr</span>(<span class="st">&quot;href&quot;</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  movie_links <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;https://www.imdb.com&quot;</span>,rel_links)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  year <span class="ot">&lt;-</span> t <span class="sc">%&gt;%</span> <span class="fu">html_nodes</span>(<span class="st">&quot;.text-muted.unbold&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">html_text</span>()</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  rating <span class="ot">&lt;-</span> t <span class="sc">%&gt;%</span> <span class="fu">html_nodes</span>(<span class="st">&quot;.ratings-imdb-rating strong&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">html_text</span>()</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  director<span class="ot">&lt;-</span> t <span class="sc">%&gt;%</span>  <span class="fu">html_nodes</span>(<span class="st">&quot;.text-muted+ p a:nth-child(1)&quot;</span>) <span class="sc">%&gt;%</span>  <span class="fu">html_text</span>()</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  runtime<span class="ot">&lt;-</span>  t <span class="sc">%&gt;%</span>  <span class="fu">html_nodes</span>(<span class="st">&quot;.runtime&quot;</span>) <span class="sc">%&gt;%</span>  <span class="fu">html_text</span>()</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  votes<span class="ot">&lt;-</span>  t <span class="sc">%&gt;%</span>  <span class="fu">html_nodes</span>(<span class="st">&quot;.sort-num_votes-visible span:nth-child(2)&quot;</span>) <span class="sc">%&gt;%</span>  <span class="fu">html_text</span>()</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="st">&#39;Movie Name&#39;</span> <span class="ot">=</span> name, <span class="st">&#39;Release Year&#39;</span> <span class="ot">=</span> year,<span class="st">&#39;Movie Rating&#39;</span> <span class="ot">=</span> rating,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&#39;Director&#39;</span> <span class="ot">=</span> director,<span class="st">&#39;Run time&#39;</span> <span class="ot">=</span> runtime,<span class="st">&#39;Votes&#39;</span> <span class="ot">=</span> votes,<span class="st">&#39;Movie Links&#39;</span> <span class="ot">=</span> movie_links)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 </div>
 <div id="adding-links" class="section level2">
 <h2>Adding Links</h2>
@@ -169,13 +170,13 @@ a.sourceLine {
 <h2>Final Data Table</h2>
 <table>
 <colgroup>
-<col width="27%" />
-<col width="9%" />
-<col width="9%" />
-<col width="13%" />
+<col width="23%" />
+<col width="8%" />
+<col width="8%" />
+<col width="11%" />
+<col width="5%" />
 <col width="6%" />
-<col width="7%" />
-<col width="25%" />
+<col width="34%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -185,7 +186,7 @@ a.sourceLine {
 <th align="left">Director</th>
 <th align="left">Run.time</th>
 <th align="left">Votes</th>
-<th align="left">Links</th>
+<th align="left">Movie.Links</th>
 </tr>
 </thead>
 <tbody>
@@ -196,7 +197,7 @@ a.sourceLine {
 <td align="left">Christopher Nolan</td>
 <td align="left">148 min</td>
 <td align="left">2,190,868</td>
-<td align="left">/title/tt1375666/?ref_=adv_li_tt</td>
+<td align="left"><a href="https://www.imdb.com/title/tt1375666/?ref_=adv_li_tt" class="uri">https://www.imdb.com/title/tt1375666/?ref_=adv_li_tt</a></td>
 </tr>
 <tr class="even">
 <td align="left">Mátrix</td>
@@ -205,7 +206,7 @@ a.sourceLine {
 <td align="left">Lana Wachowski</td>
 <td align="left">136 min</td>
 <td align="left">1,776,780</td>
-<td align="left">/title/tt0133093/?ref_=adv_li_tt</td>
+<td align="left"><a href="https://www.imdb.com/title/tt0133093/?ref_=adv_li_tt" class="uri">https://www.imdb.com/title/tt0133093/?ref_=adv_li_tt</a></td>
 </tr>
 <tr class="odd">
 <td align="left">A Birodalom visszavág</td>
@@ -214,7 +215,7 @@ a.sourceLine {
 <td align="left">Irvin Kershner</td>
 <td align="left">124 min</td>
 <td align="left">1,213,693</td>
-<td align="left">/title/tt0080684/?ref_=adv_li_tt</td>
+<td align="left"><a href="https://www.imdb.com/title/tt0080684/?ref_=adv_li_tt" class="uri">https://www.imdb.com/title/tt0080684/?ref_=adv_li_tt</a></td>
 </tr>
 <tr class="even">
 <td align="left">National Theatre Live: Frankenstein</td>
@@ -223,7 +224,7 @@ a.sourceLine {
 <td align="left">Danny Boyle</td>
 <td align="left">130 min</td>
 <td align="left">3,589</td>
-<td align="left">/title/tt1795369/?ref_=adv_li_tt</td>
+<td align="left"><a href="https://www.imdb.com/title/tt1795369/?ref_=adv_li_tt" class="uri">https://www.imdb.com/title/tt1795369/?ref_=adv_li_tt</a></td>
 </tr>
 <tr class="odd">
 <td align="left">Csillagok között</td>
@@ -232,7 +233,7 @@ a.sourceLine {
 <td align="left">Christopher Nolan</td>
 <td align="left">169 min</td>
 <td align="left">1,638,983</td>
-<td align="left">/title/tt0816692/?ref_=adv_li_tt</td>
+<td align="left"><a href="https://www.imdb.com/title/tt0816692/?ref_=adv_li_tt" class="uri">https://www.imdb.com/title/tt0816692/?ref_=adv_li_tt</a></td>
 </tr>
 <tr class="even">
 <td align="left">Csillagok háborúja</td>
@@ -241,7 +242,7 @@ a.sourceLine {
 <td align="left">George Lucas</td>
 <td align="left">121 min</td>
 <td align="left">1,285,480</td>
-<td align="left">/title/tt0076759/?ref_=adv_li_tt</td>
+<td align="left"><a href="https://www.imdb.com/title/tt0076759/?ref_=adv_li_tt" class="uri">https://www.imdb.com/title/tt0076759/?ref_=adv_li_tt</a></td>
 </tr>
 </tbody>
 </table>
