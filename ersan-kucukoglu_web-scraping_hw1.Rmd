@@ -52,5 +52,6 @@ movies_df<- rbindlist(df_list)
 ## Final Data Table
 ```{r, echo=FALSE}
 dataset1 <- head(movies_df)
+write.csv(movies_df,"movies.csv")
 knitr::kable(dataset1)
 ```
