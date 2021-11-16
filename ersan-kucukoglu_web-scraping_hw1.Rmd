@@ -1,6 +1,6 @@
 ---
 title: "Coding 2 - Assignment 1: HTML Process Script"
-author: "Nadine Isabel Levin"
+author: "Ersan Kucukoglu"
 date: "November 15, 2021"
 output:
   prettydoc::html_pretty:
