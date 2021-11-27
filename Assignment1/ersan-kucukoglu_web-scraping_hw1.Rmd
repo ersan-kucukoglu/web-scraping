@@ -19,9 +19,9 @@ library(httr)
 ## Creating Function
 
 ```{r setup}
-
+imdb_link <- 'https://www.imdb.com/search/title/?title_type=feature&num_votes=1000,&genres=sci-fi&sort=user_rating,desc&ref_=adv_prv'
 get_movies <- function(imdb_link) {
-  t <- read_html('https://www.imdb.com/search/title/?title_type=feature&num_votes=1000,&genres=sci-fi&sort=user_rating,desc&ref_=adv_prv')
+  t <- read_html(imdb_link)
   write_html(t, 't.html')
   name <- t %>% html_nodes(".lister-item-header a") %>% html_text() 
   rel_links<-  t %>% html_nodes(".lister-item-header a") %>% html_attr("href")
